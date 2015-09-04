@@ -26,8 +26,10 @@ public class Runner {
         int gapcost = 5;
 
         LinearSequenceAligner seqAligner = new LinearSequenceAligner(seqMatrix, gapcost);
-        FastaParser fastaParser = new FastaParser("seq2.fasta");
-        fastaParser.parse("Seq2");
+        FastaParser fastaParser = new FastaParser("seq1.fasta");
+        char[] seq1 = fastaParser.parse("Seq1").replaceAll(" ", "").toCharArray();
+        fastaParser = new FastaParser("seq2.fasta");
+        char[] seq2 = fastaParser.parse("Seq2").replaceAll(" ", "").toCharArray();
         /*char[] seq1 = ("GGCCTAAAGGCGCCGGTCTTTCGTACCCCAAAATCTCGGCATTTTAAGAT" +
                 "AAGTGAGTGTTGCGTTACACTAGCGATCTACCGCGTCTTATACTTAAGCG" +
                 "TATGCCCAGATCTGACTAATCGTGCCCCCGGATTAGACGGGCTTGATGGG" +
@@ -35,12 +37,12 @@ public class Runner {
         char[] seq2 = ("GGGCTAAAGGTTAGGGTCTTTCACACTAAAGAGTGGTGCGTATCGTGGCT" +
                 "AATGTACCGCTTCTGGTATCGTGGCTTACGGCCAGACCTACAAGTACTAG" +
                 "ACCTGAGAACTAATCTTGTCGAGCCTTCCATTGAGGGTAATGGGAGAGAA" +
-                "CATCGAGTCAGAAGTTATTCTTGTTTACGTAGAATCGCCTGGGTCCGC").toCharArray();
+                "CATCGAGTCAGAAGTTATTCTTGTTTACGTAGAATCGCCTGGGTCCGC").toCharArray();*/
         //char[] seq1 = "AATAAT".toCharArray();
         //char[] seq2 = "AAGG".toCharArray();
         int res = seqAligner.calculateMinCost(seq1, seq2);
 
         System.out.println(res);
-        System.out.println(seqAligner.backtrack(seq1, seq2));*/
+        System.out.println(seqAligner.backtrack(seq1, seq2));
     }
 }
