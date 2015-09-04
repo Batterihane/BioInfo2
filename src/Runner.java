@@ -1,12 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
-
 /**
  * Created by Thomas on 27-08-2015.
  */
 public class Runner {
-    public static void main(String[] args) throws Exception{
-        Map<CharPair, Integer> seqMatrix = new HashMap<CharPair, Integer>();
+    public static void main(String[] args) throws Exception{Map<CharPair, Integer> seqMatrix = new HashMap<CharPair, Integer>();
         seqMatrix.put(new CharPair('A', 'A'), -10);
         seqMatrix.put(new CharPair('A', 'C'), -2);
         seqMatrix.put(new CharPair('A', 'G'), -5);
@@ -27,19 +25,9 @@ public class Runner {
 
         AffineSequenceAligner seqAligner = new AffineSequenceAligner(seqMatrix, gapcost, 0);
         FastaParser fastaParser = new FastaParser("seq1.fasta");
-        char[] seq1 = fastaParser.parse("Seq1").replaceAll(" ", "").toCharArray();
+        char[] seq1 = fastaParser.parse("Seq1").toCharArray();
         fastaParser = new FastaParser("seq2.fasta");
-        char[] seq2 = fastaParser.parse("Seq2").replaceAll(" ", "").toCharArray();
-        /*char[] seq1 = ("GGCCTAAAGGCGCCGGTCTTTCGTACCCCAAAATCTCGGCATTTTAAGAT" +
-                "AAGTGAGTGTTGCGTTACACTAGCGATCTACCGCGTCTTATACTTAAGCG" +
-                "TATGCCCAGATCTGACTAATCGTGCCCCCGGATTAGACGGGCTTGATGGG" +
-                "AAAGAACAGCTCGTCTGTTTACGTATAAACAGAATCGCCTGGGTTCGC").toCharArray();
-        char[] seq2 = ("GGGCTAAAGGTTAGGGTCTTTCACACTAAAGAGTGGTGCGTATCGTGGCT" +
-                "AATGTACCGCTTCTGGTATCGTGGCTTACGGCCAGACCTACAAGTACTAG" +
-                "ACCTGAGAACTAATCTTGTCGAGCCTTCCATTGAGGGTAATGGGAGAGAA" +
-                "CATCGAGTCAGAAGTTATTCTTGTTTACGTAGAATCGCCTGGGTCCGC").toCharArray();*/
-        //char[] seq1 = "AATAAT".toCharArray();
-        //char[] seq2 = "AAGG".toCharArray();
+        char[] seq2 = fastaParser.parse("Seq2").toCharArray();
         int res = seqAligner.calculateMinCost(seq1, seq2);
 
         System.out.println(res);

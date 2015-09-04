@@ -28,7 +28,7 @@ public class FastaParser {
                     String res = "";
                     curString = bufRead.readLine();
                     while ( (curString != null) && (!curString.startsWith(">"))){
-                        res+=curString;
+                        res+=curString.replaceAll(" ", "");
                         curString = bufRead.readLine();
                     }
                     return res;
