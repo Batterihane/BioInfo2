@@ -5,7 +5,7 @@ import java.util.Map;
  * Created by Thomas on 27-08-2015.
  */
 public class Runner {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         Map<CharPair, Integer> seqMatrix = new HashMap<CharPair, Integer>();
         seqMatrix.put(new CharPair('A', 'A'), -10);
         seqMatrix.put(new CharPair('A', 'C'), -2);
@@ -26,7 +26,9 @@ public class Runner {
         int gapcost = 5;
 
         LinearSequenceAligner seqAligner = new LinearSequenceAligner(seqMatrix, gapcost);
-        char[] seq1 = ("GGCCTAAAGGCGCCGGTCTTTCGTACCCCAAAATCTCGGCATTTTAAGAT" +
+        FastaParser fastaParser = new FastaParser("seq2.fasta");
+        fastaParser.parse("Seq2");
+        /*char[] seq1 = ("GGCCTAAAGGCGCCGGTCTTTCGTACCCCAAAATCTCGGCATTTTAAGAT" +
                 "AAGTGAGTGTTGCGTTACACTAGCGATCTACCGCGTCTTATACTTAAGCG" +
                 "TATGCCCAGATCTGACTAATCGTGCCCCCGGATTAGACGGGCTTGATGGG" +
                 "AAAGAACAGCTCGTCTGTTTACGTATAAACAGAATCGCCTGGGTTCGC").toCharArray();
@@ -36,9 +38,9 @@ public class Runner {
                 "CATCGAGTCAGAAGTTATTCTTGTTTACGTAGAATCGCCTGGGTCCGC").toCharArray();
         //char[] seq1 = "AATAAT".toCharArray();
         //char[] seq2 = "AAGG".toCharArray();
-        int res = seqAligner.calculateMaxCost(seq1, seq2);
+        int res = seqAligner.calculateMinCost(seq1, seq2);
 
         System.out.println(res);
-        System.out.println(seqAligner.backtrack(seq1, seq2));
+        System.out.println(seqAligner.backtrack(seq1, seq2));*/
     }
 }

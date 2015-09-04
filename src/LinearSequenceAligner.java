@@ -13,7 +13,7 @@ public class LinearSequenceAligner {
         this.gapCost = gapCost;
     }
 
-    public int calculateMaxCost(char[] seq1, char[] seq2){
+    public int calculateMinCost(char[] seq1, char[] seq2){
         resultMap = new int[seq1.length + 1][seq2.length + 1];
         for(int i = 0 ; i < seq1.length + 1 ; i++){
             for(int j = 0 ; j < seq2.length + 1 ; j++){
