@@ -25,7 +25,7 @@ public class Runner {
         seqMatrix.put(new CharPair('T', 'T'), -10);
         int gapcost = 5;
 
-        LinearSequenceAligner seqAligner = new LinearSequenceAligner(seqMatrix, gapcost);
+        AffineSequenceAligner seqAligner = new AffineSequenceAligner(seqMatrix, gapcost, 0);
         FastaParser fastaParser = new FastaParser("seq1.fasta");
         char[] seq1 = fastaParser.parse("Seq1").replaceAll(" ", "").toCharArray();
         fastaParser = new FastaParser("seq2.fasta");
@@ -43,6 +43,6 @@ public class Runner {
         int res = seqAligner.calculateMinCost(seq1, seq2);
 
         System.out.println(res);
-        System.out.println(seqAligner.backtrack(seq1, seq2));
+        //System.out.println(seqAligner.backtrack(seq1, seq2));
     }
 }
