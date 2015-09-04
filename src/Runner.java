@@ -1,10 +1,16 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 /**
  * Created by Thomas on 27-08-2015.
  */
 public class Runner {
     public static void main(String[] args) throws Exception{Map<CharPair, Integer> seqMatrix = new HashMap<CharPair, Integer>();
+
+
+        MatrixParser mp = new MatrixParser();
+        List<Integer> li = mp.getCostMatrix("costMatrix.txt");
+
         seqMatrix.put(new CharPair('A', 'A'), -10);
         seqMatrix.put(new CharPair('A', 'C'), -2);
         seqMatrix.put(new CharPair('A', 'G'), -5);
