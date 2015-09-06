@@ -32,5 +32,10 @@ public class Runner {
 
         System.out.println(res);
         //System.out.println(seqAligner.backtrack(seq1, seq2));
+        Prompter p = new Prompter();
+        p.prompt();
+
+
+
     }
 }
