@@ -53,7 +53,7 @@ public class Prompter {
                 "\"file\" to select a fasta file\n\t"+
                 "\"seq\" to select sequences from the current file\n\t"+
                 "\"run\" to compute a minimum global alignment on selected sequences with the current score matrix and gap cost\n\t" +
-                "\"backtrack\" to compute and print out an optimal alignment after using \"run\""+
+                "\"backtrack\" to compute and print out an optimal alignment after using \"run\"\n\t"+
                 "\"q\" to quit\n\t"
         );
         System.out.println(s);
