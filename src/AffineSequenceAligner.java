@@ -41,18 +41,18 @@ public class AffineSequenceAligner {
             v1 = cost(seq1, seq2, i-1, j-1) + seqMatrix.get(new CharPair(seq1[i-1], seq2[j-1]));
         }
         if(i > 0 && j >= 0){ //deletion
-            int singleBlockCost = cost(seq1, seq2, i-1, j) - (gapCostAlpha + gapCostBeta);
+            int singleBlockCost = cost(seq1, seq2, i-1, j) + (gapCostAlpha + gapCostBeta);
             if(i > 1){
-                v2 = Math.min(singleBlockCost, deletionMap[i-1][j] - gapCostAlpha);
+                v2 = Math.min(singleBlockCost, deletionMap[i-1][j] + gapCostAlpha);
             } else {
                 v2 = singleBlockCost;
             }
             deletionMap[i][j] = v2;
         }
         if(i >= 0 && j > 0){ //insertion
-            int singleBlockCost = cost(seq1, seq2, i, j-1) - (gapCostAlpha + gapCostBeta);
+            int singleBlockCost = cost(seq1, seq2, i, j-1) + (gapCostAlpha + gapCostBeta);
             if(j > 1){
-                v3 = Math.min(singleBlockCost, insertionMap[i][j-1] - gapCostAlpha);
+                v3 = Math.min(singleBlockCost, insertionMap[i][j-1] + gapCostAlpha);
             } else {
                 v3 = singleBlockCost;
             }

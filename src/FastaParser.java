@@ -31,7 +31,7 @@ public class FastaParser {
                         res+=curString.replaceAll(" ", "");
                         curString = bufRead.readLine();
                     }
-                    return res;
+                    return res.toUpperCase();
                 }
             }
             curString = bufRead.readLine();
