@@ -26,7 +26,7 @@ public class RuntimeTester {
             PrintWriter writer2 = new PrintWriter("seqSizes.txt");
             PrintWriter writer3 = new PrintWriter("backtrackruntimes.txt");
             char[] seq1, seq2;
-            double startTime, timeDifference;
+            long startTime, timeDifference;
             int seqLength;
         try{
             for (int i = 100; i < 7000; i = i + 40) {
@@ -36,17 +36,18 @@ public class RuntimeTester {
 
                 writer2.println(seqLength);
 
-                startTime = System.currentTimeMillis();
+                startTime = System.nanoTime();
                 seqAligner.calculateMinCost(seq1, seq2);
-                timeDifference = System.currentTimeMillis() - startTime;
+                timeDifference = System.nanoTime() - startTime;
 
                 writer.println(timeDifference / (seqLength * seqLength));
 
-                startTime = System.currentTimeMillis();
+                startTime = System.nanoTime();
                 seqAligner.backtrack(seq1,seq2);
-                timeDifference = System.currentTimeMillis() - startTime;
+                timeDifference = System.nanoTime() - startTime;
 
                 writer3.println(timeDifference/(seqLength));
+                System.out.println(i);
             }
         } catch(Exception e){
             e.printStackTrace();
