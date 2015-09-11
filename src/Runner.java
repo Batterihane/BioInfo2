@@ -23,9 +23,9 @@ public class Runner {
         int res = seqAligner.calculateMinCost(seq1, seq2);
 
         System.out.println(res);
-        //System.out.println(seqAligner.backtrack(seq1, seq2));
-        Prompter p = new Prompter();
-        p.prompt();
+        System.out.println(seqAligner.backtrack(seq1, seq2));
+        //Prompter p = new Prompter();
+        //p.prompt();
 
 
 
