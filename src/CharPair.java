@@ -28,4 +28,12 @@ public class CharPair {
         this.y = y;
 
     }
+
+    @Override
+    public String toString() {
+        return "CharPair{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
