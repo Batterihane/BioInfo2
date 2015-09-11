@@ -28,8 +28,8 @@ public class Runner {
 
         System.out.println(res);
         System.out.println(seqAligner.backtrack(seq1, seq2));
-        //solution.Prompter p = new solution.Prompter();
-        //p.prompt();
+        solution.Prompter p = new solution.Prompter();
+        p.prompt();
 
 
 

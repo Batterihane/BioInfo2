@@ -12,12 +12,20 @@ public class FastaParser {
 
     String curString="";
     BufferedReader bufRead;
+    File f;
+    String filepath;
 
     public FastaParser(String filepath) throws FileNotFoundException {
-        this.bufRead = new BufferedReader(new FileReader(filepath));
+        this.filepath = filepath;
     }
-
-    public String parse(String seqName) throws IOException{
+    public FastaParser(File file) throws FileNotFoundException {
+        f = file;
+    }
+    public String parse(String seqName) throws Exception{
+        if (filepath!=null)
+            bufRead = new BufferedReader(new FileReader(filepath));
+        if (f!=null)
+            bufRead = new BufferedReader(new FileReader(f));
         curString = bufRead.readLine();
         while(curString !=null){
             if (curString.startsWith(">")) {
@@ -31,11 +39,12 @@ public class FastaParser {
                         res+=curString.replaceAll(" ", "");
                         curString = bufRead.readLine();
                     }
+                    bufRead.close();
                     return res.toUpperCase();
                 }
             }
             curString = bufRead.readLine();
         }
-        return "String not found";
+        throw new Exception("Sequence not found");
     }
 }

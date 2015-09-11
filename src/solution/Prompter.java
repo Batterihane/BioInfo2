@@ -1,6 +1,10 @@
 package solution;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -8,18 +12,32 @@ import java.util.Scanner;
  */
 public class Prompter {
 
-    String seq1="";
-    String seq2="";
-
+    char[] seq1;
+    char[] seq2;
+    FastaParser fp;
     Scanner sc;
+    Map<CharPair,Integer> seqMatrix;
+    int gapCostAlpha;
+    int gapCostBeta;
+    List<Integer> intl;
+    MatrixParser matrixParser = new MatrixParser();
+
+    AffineSequenceAligner seqAligner;
     public Prompter(){
         sc = new Scanner(System.in);
+        intl = matrixParser.parseFile("costMatrix.txt");
+
+        seqMatrix = matrixParser.getCostMatrix();
+        gapCostAlpha = matrixParser.getGapCostAlpha();
+        gapCostBeta = matrixParser.getGapCostBeta();
+
+        seqAligner= new AffineSequenceAligner(seqMatrix, gapCostAlpha, gapCostBeta);
 
     }
 
     public void prompt(){
         String s = ("type:\n\t" +
-                "\"cost\" to see cost matrix and gap cost\n\t" +
+                "\"cost\" to see score matrix and gap cost\n\t" +
                 "\"file\" to select a fasta file\n\t"+
                 "\"seq\" to select sequences from the current file\n\t"+
                 "\"run\" to compute a minimum global alignment on selected sequences with the current score matrix and gap cost\n\t" +
@@ -33,27 +51,75 @@ public class Prompter {
 
             switch (inp) {
                 case "COST":
-                    System.out.println("");
+                    String s2 = "Scorematrix (ACGT/ACGT):";
+                    for (int i=0; i<16;i++){
+                        if (i%4==0)
+                            s2+="\n";
+                        s2 += " "+Integer.toString(intl.get(i));
+                    }
+                    s2 += "\nGapcost alpha: "+Integer.toString(intl.get(16));
+                    s2 += "\nGapcost beta: "+Integer.toString(intl.get(17));
+                    System.out.println(s2);
+
                     break;
                 case "FILE":
                     System.out.println("Please input name of the fasta file");
                     inp = sc.next();
-                   // if
-                    try{FastaParser fp = new FastaParser(inp);}
-                    catch(FileNotFoundException fnf){}
+                    File f;
+                    if (inp.endsWith(".fasta")) {
+                        f = new File(inp);
+                    }else {
+                        f = new File(inp + ".fasta");
+                    }
+                    if (f.exists() && !f.isDirectory()) {
+                        try {
+                            fp = new FastaParser(f);
+                        } catch (FileNotFoundException fnf) {
+                            System.out.println("an error occurred");
+                        }
+                    }else
+                        System.out.printf("No file named %s or %s", inp, inp + ".fasta\n");
                     break;
                 case "SEQ":
-                    System.out.println("Please input name of the first sequence");
-                    seq1 = sc.next().toUpperCase();
-                    System.out.println("Please input name of the second sequence");
-                    seq2 = sc.next().toUpperCase();
+                    if(fp==null)
+                        System.out.println("Please first select a file in FASTA format to parse");
+                    else{
+                        System.out.println("Type '1' to change first sequence, and '2' to change second");
+                        inp = sc.next();
+                        if (!inp.equals("1") && !inp.equals("2")){
+                            System.out.println("invalid command");
+                            break;
+                        }
+
+                        try {
+                            if (inp.equals("1")) {
+                                System.out.println("Please input name of the first sequence (Case sensitive)");
+                                seq1 = fp.parse(sc.next()).toCharArray();
+                                System.out.println("Sequence 1 set");
+                            }
+                        }catch(IOException ioe){System.out.println(ioe.getMessage());}
+                        catch(Exception e){System.out.println(e.getMessage());}
+                        try {
+                            if (inp.equals("2")) {
+                                System.out.println("Please input name of the second sequence (Case sensitive)");
+                                seq2 = fp.parse(sc.next()).toCharArray();
+                                System.out.println("Sequence 2 set");
+                            }
+                        }catch(IOException ioe){System.out.println(ioe.getMessage());}
+                        catch(Exception e){System.out.println(e.getMessage());}
+                    }
                     break;
                 case "RUN":
-                    System.out.println("");
+                    System.out.println(seqAligner.calculateMinCost(seq1, seq2));
                     break;
                 case "BACKTRACK":
-                    System.out.println("");
+                    if (seqAligner == null || seqAligner.resultMap==null)
+                        System.out.println("You can't backtrack until you run");
+                    else System.out.println(seqAligner.backtrack(seq1, seq2));
                     break;
+                default:
+                    System.out.println("Invalid command!\n"+s);
+
 
             }
         }
