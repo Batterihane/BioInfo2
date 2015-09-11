@@ -24,27 +24,36 @@ public class RuntimeTester {
             AffineSequenceAligner seqAligner = new AffineSequenceAligner(seqMatrix, gapCostAlpha, gapCostBeta);
             PrintWriter writer = new PrintWriter("runtimeResults.txt");
             PrintWriter writer2 = new PrintWriter("seqSizes.txt");
+            PrintWriter writer3 = new PrintWriter("backtrackruntimes.txt");
             char[] seq1, seq2;
             double startTime, timeDifference;
             int seqLength;
         try{
-            for (int i = 100; i < 7000; i = i + 20) {
+            for (int i = 100; i < 7000; i = i + 40) {
                 seqLength = i;
                 seq1 = generateRandomString(seqLength);
                 seq2 = generateRandomString(seqLength);
 
+                writer2.println(seqLength);
+
                 startTime = System.currentTimeMillis();
                 seqAligner.calculateMinCost(seq1, seq2);
                 timeDifference = System.currentTimeMillis() - startTime;
-                System.out.println("Calculating min cost with seq length " + seqLength + " took " + timeDifference + " ms");
+
                 writer.println(timeDifference / (seqLength * seqLength));
-                writer2.println(seqLength);
+
+                startTime = System.currentTimeMillis();
+                seqAligner.backtrack(seq1,seq2);
+                timeDifference = System.currentTimeMillis() - startTime;
+
+                writer3.println(timeDifference/(seqLength));
             }
         } catch(Exception e){
             e.printStackTrace();
         } finally {
             writer.close();
             writer2.close();
+            writer3.close();
         }
     }
 
