@@ -21,6 +21,7 @@ public class Prompter {
     int gapCostBeta;
     List<Integer> intl;
     MatrixParser matrixParser = new MatrixParser();
+    File f;
 
     AffineSequenceAligner seqAligner;
     public Prompter(){
@@ -32,6 +33,17 @@ public class Prompter {
         gapCostBeta = matrixParser.getGapCostBeta();
 
         seqAligner= new AffineSequenceAligner(seqMatrix, gapCostAlpha, gapCostBeta);
+        File sf = new File("Seq.fasta");
+        if (sf.exists()){
+            f=sf;
+            try{FastaParser fp = new FastaParser(f);
+                seq1 = fp.parse("Seq1").toCharArray();
+                seq2 = fp.parse("Seq2").toCharArray();
+                System.out.println(" \"Seq1\" and \"Seq2\" were loaded from \"Seq.fasta\"");
+            }
+            catch(IOException ioe){System.out.println("No file named \"Seq.fasta\" was included. File must be selected manually");}
+            catch(Exception e){System.out.println("\"Seq.fasta\" did not have sequences named \"Seq1\" and \"Seq2\". File and sequences must be selected manually");}
+        }
 
     }
 
@@ -41,7 +53,8 @@ public class Prompter {
                 "\"file\" to select a fasta file\n\t"+
                 "\"seq\" to select sequences from the current file\n\t"+
                 "\"run\" to compute a minimum global alignment on selected sequences with the current score matrix and gap cost\n\t" +
-                "\"backtrack\" to compute and print out an optimal alignment after using \"run\""
+                "\"backtrack\" to compute and print out an optimal alignment after using \"run\""+
+                "\"q\" to quit\n\t"
         );
         System.out.println(s);
         String inp = "";
@@ -65,7 +78,6 @@ public class Prompter {
                 case "FILE":
                     System.out.println("Please input name of the fasta file");
                     inp = sc.next();
-                    File f;
                     if (inp.endsWith(".fasta")) {
                         f = new File(inp);
                     }else {

@@ -39,6 +39,7 @@ public class TestRunner {
         AffineSequenceAligner seqAligner = new AffineSequenceAligner(seqMatrix, gapCostAlpha, gapCostBeta);
 
         FastaParser fastaParser = new FastaParser(path + "/seq1.fasta");
+
         char[] seq1 = fastaParser.parse("Seq1").toCharArray();
         fastaParser = new FastaParser(path + "/seq2.fasta");
         char[] seq2 = fastaParser.parse("Seq2").toCharArray();
