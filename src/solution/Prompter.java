@@ -3,6 +3,7 @@ package solution;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ public class Prompter {
     char[] seq1;
     char[] seq2;
     FastaParser fp;
+    FastaWriter writer;
     Scanner sc;
     Map<CharPair,Integer> seqMatrix;
     int gapCostAlpha;
@@ -24,7 +26,8 @@ public class Prompter {
     File f;
 
     AffineSequenceAligner seqAligner;
-    public Prompter(){
+    public Prompter() throws Exception {
+        writer = new FastaWriter("alignment");
         sc = new Scanner(System.in);
         intl = matrixParser.parseFile("costMatrix.txt");
 
@@ -43,6 +46,9 @@ public class Prompter {
             }
             catch(IOException ioe){System.out.println("No file named \"Seq.fasta\" was included. File must be selected manually");}
             catch(Exception e){System.out.println("\"Seq.fasta\" did not have sequences named \"Seq1\" and \"Seq2\". File and sequences must be selected manually");}
+        }
+        else {
+            System.out.println("No file named \"Seq.fasta\" was included. File must be selected manually");
         }
 
     }
@@ -86,6 +92,7 @@ public class Prompter {
                     if (f.exists() && !f.isDirectory()) {
                         try {
                             fp = new FastaParser(f);
+                            System.out.println("The file " + inp + " has been loaded.");
                         } catch (FileNotFoundException fnf) {
                             System.out.println("an error occurred");
                         }
@@ -122,12 +129,18 @@ public class Prompter {
                     }
                     break;
                 case "RUN":
-                    System.out.println(seqAligner.calculateMinCost(seq1, seq2));
+                    int costResult = seqAligner.calculateMinCost(seq1, seq2);
+                    System.out.println(costResult);
                     break;
                 case "BACKTRACK":
                     if (seqAligner == null || seqAligner.resultMap==null)
                         System.out.println("You can't backtrack until you run");
-                    else System.out.println(seqAligner.backtrack(seq1, seq2));
+                    else {
+                        String alignment = seqAligner.backtrack(seq1, seq2);
+                        System.out.println(alignment);
+                        String[] alignmentSplit = alignment.split("\\r?\\n\\r?\\n");
+                        writer.writeSequences(alignmentSplit[0], alignmentSplit[1]);
+                    }
                     break;
                 case "Q"://do nothing and then it will quit
                     break;

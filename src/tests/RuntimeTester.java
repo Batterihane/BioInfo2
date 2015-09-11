@@ -29,7 +29,7 @@ public class RuntimeTester {
             long startTime, timeDifference;
             int seqLength;
         try{
-            for (int i = 100; i < 7000; i = i + 40) {
+            for (int i = 100; i < 7000; i = i + 50) {
                 seqLength = i;
                 seq1 = generateRandomString(seqLength);
                 seq2 = generateRandomString(seqLength);
