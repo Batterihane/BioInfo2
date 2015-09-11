@@ -24,7 +24,7 @@ public class TestRunner {
         System.out.println("Case 4_2 + " + (testRunner.test("4_2", 395, expectedSeq1Result, expectedSeq2Result) ? "succeeded" : "failed"));
     }
 
-    public boolean test(String caseNumber, int expectedScore, String expectedSeq1Result, String expectedSeq2Result) throws IOException {
+    public boolean test(String caseNumber, int expectedScore, String expectedSeq1Result, String expectedSeq2Result) throws Exception {
         boolean res = true;
 
         String path = "testData/case" + caseNumber;
