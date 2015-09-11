@@ -22,16 +22,16 @@ public class AffineSequenceAligner {
         insertionMap = new int[seq1.length + 1][seq2.length + 1];
         for (int i = 0; i < seq1.length + 1; i++) {
             for (int j = 0; j < seq2.length + 1; j++) {
-                resultMap[i][j] = -99;
-                deletionMap[i][j] = -99;
-                insertionMap[i][j] = -99;
+                resultMap[i][j] = Integer.MIN_VALUE;
+                deletionMap[i][j] = Integer.MIN_VALUE;
+                insertionMap[i][j] = Integer.MIN_VALUE;
             }
         }
         return cost(seq1, seq2, seq1.length, seq2.length);
     }
 
     private int cost(char[] seq1, char[] seq2, int i, int j) {
-        if (resultMap[i][j] != -99) {
+        if (resultMap[i][j] != Integer.MIN_VALUE) {
             return resultMap[i][j];
         }
 

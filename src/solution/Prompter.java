@@ -129,6 +129,8 @@ public class Prompter {
                         System.out.println("You can't backtrack until you run");
                     else System.out.println(seqAligner.backtrack(seq1, seq2));
                     break;
+                case "Q"://do nothing and then it will quit
+                    break;
                 default:
                     System.out.println("Invalid command!\n"+s);
 
