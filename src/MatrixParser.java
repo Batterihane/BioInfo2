@@ -35,7 +35,7 @@ public class MatrixParser
         }
     }
 
-    public void initFields(List<Integer> integers)
+    private void initFields(List<Integer> integers)
     {
         HashMap<CharPair, Integer> costMatrix = new HashMap<CharPair, Integer>();
 
