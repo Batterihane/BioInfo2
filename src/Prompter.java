@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -5,6 +6,8 @@ import java.util.Scanner;
  */
 public class Prompter {
 
+    String seq1="";
+    String seq2="";
 
     Scanner sc;
     public Prompter(){
@@ -13,9 +16,8 @@ public class Prompter {
     }
 
     public void prompt(){
-        printstuff();
         String s = ("type:\n\t" +
-                "\"cost\" to set cost matrix and gap cost\n\t" +
+                "\"cost\" to see cost matrix and gap cost\n\t" +
                 "\"file\" to select a fasta file\n\t"+
                 "\"seq\" to select sequences from the current file\n\t"+
                 "\"run\" to compute a minimum global alignment on selected sequences with the current score matrix and gap cost\n\t" +
@@ -32,10 +34,17 @@ public class Prompter {
                     System.out.println("");
                     break;
                 case "FILE":
-                    System.out.println("");
+                    System.out.println("Please input name of the fasta file");
+                    inp = sc.next();
+                   // if
+                    try{FastaParser fp = new FastaParser(inp);}
+                    catch(FileNotFoundException fnf){}
                     break;
                 case "SEQ":
-                    System.out.println("");
+                    System.out.println("Please input name of the first sequence");
+                    seq1 = sc.next().toUpperCase();
+                    System.out.println("Please input name of the second sequence");
+                    seq2 = sc.next().toUpperCase();
                     break;
                 case "RUN":
                     System.out.println("");
