@@ -1,4 +1,8 @@
-import java.util.HashMap;
+import solution.AffineSequenceAligner;
+import solution.CharPair;
+import solution.FastaParser;
+import solution.MatrixParser;
+
 import java.util.Map;
 /**
  * Created by Thomas on 27-08-2015.
@@ -24,7 +28,7 @@ public class Runner {
 
         System.out.println(res);
         System.out.println(seqAligner.backtrack(seq1, seq2));
-        //Prompter p = new Prompter();
+        //solution.Prompter p = new solution.Prompter();
         //p.prompt();
 
 

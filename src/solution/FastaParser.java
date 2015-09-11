@@ -1,4 +1,4 @@
-/**
+package solution; /**
  * Created with IntelliJ IDEA.
  * User: Balls
  * Date: 04/09/15
