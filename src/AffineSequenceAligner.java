@@ -75,7 +75,7 @@ public class AffineSequenceAligner {
             if ((i > 0 && j > 0) && (resultMap[i][j] == resultMap[i - 1][j - 1] + seqMatrix.get(new CharPair(seq1[i - 1], seq2[j - 1])))) {
                 //end in match is optimal
                 res1 = seq1[i - 1] + res1;
-                res2 = seq2[j - 1] + res1;
+                res2 = seq2[j - 1] + res2;
                 i--;
                 j--;
             } else {
@@ -91,17 +91,13 @@ public class AffineSequenceAligner {
                         i = i - k;
                         break;
                     }
-                    System.out.println(k);
-                    System.out.println(j);
-                    System.out.println(resultMap.length);
-                    System.out.println(resultMap[0].length);
                     if (j >= k && (resultMap[i][j] == resultMap[i][j - k] + (gapCostAlpha * k + gapCostBeta))) {
                         //end in ins gap length k is optimal
                         for (int l = j; l > j - k; l--) {
-                            res1 = seq1[l] + res1;
-                            res2 = "-" + res2;
+                            res1 = "-" + res1;
+                            res2 = seq2[l] + res2;
                         }
-                        i = i - k;
+                        j = j - k;
                         break;
                     }
                     k++;
