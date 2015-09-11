@@ -85,7 +85,7 @@ public class AffineSequenceAligner {
                     if (i >= k && (resultMap[i][j] == resultMap[i - k][j] + (gapCostAlpha * k + gapCostBeta))) {
                         //end in del gap length k is optimal
                         for (int l = i; l > i - k; l--) {
-                            res1 = seq1[l] + res1;
+                            res1 = seq1[l-1] + res1;
                             res2 = "-" + res2;
                         }
                         i = i - k;
@@ -95,7 +95,7 @@ public class AffineSequenceAligner {
                         //end in ins gap length k is optimal
                         for (int l = j; l > j - k; l--) {
                             res1 = "-" + res1;
-                            res2 = seq2[l] + res2;
+                            res2 = seq2[l-1] + res2;
                         }
                         j = j - k;
                         break;
